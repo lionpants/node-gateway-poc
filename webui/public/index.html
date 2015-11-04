@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="webui">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web UI</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+</head>
+
+<body ng-controller="IndexBodyCtrl">
+    <h1>{{messageHeader}}</h1>
+    <input type="button" ng-click="loadProducts()" value="Load Products" />
+
+    <table>
+        <tr ng-repeat="product in products">
+            <td>{{product.name}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.price}}</td>
+        </tr>
+    </table>
+
+    <div ng-view></div>
+
+    <script src="vendor/angular.js"></script>
+    <script src="vendor/angular-messages.js"></script>
+    <script src="vendor/angular-resource.js"></script>
+    <script src="vendor/angular-route.js"></script>
+    <script src="vendor/angular-cookies.js"></script>
+
+    <script src="app.js"></script>
+    <script src="services/product.js"></script>
+    <script src="controllers/index.js"></script>
+</body>
+
+</html>
