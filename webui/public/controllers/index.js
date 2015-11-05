@@ -14,4 +14,6 @@ Module.controller('IndexBodyCtrl', function($scope, Product) {
             $scope.loadProducts();
         });
     }
+
+    $scope.loadProducts();
 });

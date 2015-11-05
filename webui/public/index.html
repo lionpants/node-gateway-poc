@@ -8,27 +8,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Web UI</title>
     <link rel="icon" type="image/png" href="favicon.png" />
+    <style>
+        table {
+            border: 1px solid black;
+        }
+        
+        td {
+            padding: 5px;
+        }
+        
+        div {
+            margin-top: 15px
+        }
+    </style>
 </head>
 
 <body ng-controller="IndexBodyCtrl">
     <h1>{{messageHeader}}</h1>
-    <input type="button" ng-click="loadProducts()" value="Load Products" />
 
     <input type="text" placeholder="Name" ng-model="newProduct.name" />
     <input type="text" placeholder="Category" ng-model="newProduct.category" />
     <input type="text" placeholder="Price" ng-model="newProduct.price" />
 
     <input type="button" ng-click="addProduct()" value="Add Product" />
+    <input type="button" ng-click="loadProducts()" value="Refresh Products" />
 
-    <table border="1">
-        <tr ng-repeat="product in products">
-            <td>{{product.name}}</td>
-            <td>{{product.category}}</td>
-            <td>{{product.price}}</td>
-        </tr>
-    </table>
-
-    <div ng-view></div>
+    <p ng-show="products.length <= 0">No products found. :(</p>
+    <div ng-show="products.length > 0">
+        <table>
+            <tr ng-repeat="product in products">
+                <td>{{product.name}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.price}}</td>
+            </tr>
+        </table>
+    </div>
 
     <script src="vendor/angular.js"></script>
     <script src="vendor/angular-messages.js"></script>

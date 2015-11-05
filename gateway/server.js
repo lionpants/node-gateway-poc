@@ -4,7 +4,6 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -15,7 +14,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(logger('dev'));
-app.use(cookieParser());
 
 // Init API
 

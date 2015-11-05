@@ -11,7 +11,6 @@ mongoose.connect('mongodb://localhost/gateway-products');
 var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -21,7 +20,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(logger('dev'));
-app.use(cookieParser());
 
 // Init API
 
