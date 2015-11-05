@@ -14,7 +14,13 @@
     <h1>{{messageHeader}}</h1>
     <input type="button" ng-click="loadProducts()" value="Load Products" />
 
-    <table>
+    <input type="text" placeholder="Name" ng-model="newProduct.name" />
+    <input type="text" placeholder="Category" ng-model="newProduct.category" />
+    <input type="text" placeholder="Price" ng-model="newProduct.price" />
+
+    <input type="button" ng-click="addProduct()" value="Add Product" />
+
+    <table border="1">
         <tr ng-repeat="product in products">
             <td>{{product.name}}</td>
             <td>{{product.category}}</td>

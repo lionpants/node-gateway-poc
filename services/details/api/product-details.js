@@ -13,4 +13,11 @@ router.route('/')
             if (err) return next(err);
             res.send(products);
         });
+    })
+    .post(function(req, res, next) {
+        var product = new Product(req.body);
+        product.save(function(err, product) {
+            if (err) return next(err);
+            res.json(product);
+        });
     });

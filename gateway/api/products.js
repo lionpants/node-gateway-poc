@@ -27,7 +27,6 @@ router.route('/')
             });
 
             response.on('end', function() {
-                console.log('response from details microservice');
                 var products = JSON.parse(productData);
                 var request = http.request(pricingOptions, function(response) {
                     var pricingData = '';
@@ -37,7 +36,6 @@ router.route('/')
                     });
 
                     response.on('end', function() {
-                        console.log('response from pricing microservice');
                         var pricings = JSON.parse(pricingData);
                         __.forEach(products, function(product) {
                             var pricing = __.find(pricings, function(pricing) {
@@ -47,7 +45,6 @@ router.route('/')
                                 product.price = pricing.price;
                             }
                         });
-                        console.log(products);
                         res.send(products);
                     });
                 });
@@ -55,10 +52,70 @@ router.route('/')
                 request.on('error', function(e) {
                     console.log('failed to connect to pricing: ' + e);
                     console.log(products);
+                    __.forEach(products, function(product) {
+                        product.price = 'Pricing not available :(';
+                    });
                     res.send(products);
                 });
 
                 request.end();
             });
         }).end();
+    })
+    .post(function(req, res, next) {
+        var postData = JSON.stringify(req.body);
+
+        var productOptions = {
+            host: 'localhost',
+            port: '2222',
+            path: '/product-details',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(postData)
+            }
+        };
+
+        var detailPost = http.request(productOptions, function(r) {
+            r.setEncoding('utf8');
+            r.on('data', function(chunk) {
+                var savedProduct = JSON.parse(chunk);
+                var pricingData = JSON.stringify({
+                    productId: savedProduct._id,
+                    price: req.body.price
+                });
+
+                var pricingOptions = {
+                    host: 'localhost',
+                    port: '3333',
+                    path: '/prices',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': Buffer.byteLength(pricingData)
+                    }
+                };
+
+                var pricePost = http.request(pricingOptions, function(r) {
+                    r.setEncoding('utf8');
+                    r.on('data', function(chunk) {
+                        res.sendStatus(200);
+                    });
+                });
+
+                pricePost.on('error', function(e) {
+                    res.sendStatus(500);
+                });
+
+                pricePost.write(pricingData);
+                pricePost.end();
+            });
+        });
+
+        detailPost.on('error', function(e) {
+            res.sendStatus(500);
+        });
+
+        detailPost.write(postData);
+        detailPost.end();
     });
