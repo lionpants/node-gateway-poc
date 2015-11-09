@@ -18,7 +18,7 @@ router.route('/')
     var getProducts = needle.getAsync(productURI);
     var getPricing = needle.getAsync(pricingURI).catch(function(err) {
         console.log('Pricing API call failed...');
-        return null
+        return null;
     });
 
     Promise.join(getProducts, getPricing, function(productsResponse, pricingResponse) {
