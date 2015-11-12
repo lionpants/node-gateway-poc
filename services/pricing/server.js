@@ -2,8 +2,6 @@
 
 var mongoose = require('mongoose');
 
-require('./models/pricing');
-
 mongoose.connect('mongodb://localhost/gateway-pricing');
 
 // Init App/Plugins
@@ -23,9 +21,7 @@ app.use(logger('dev'));
 
 // Init API
 
-var prices = require('./api/prices');
-
-app.use('/prices', prices);
+require('./api/prices')(app);
 
 // Start app
 

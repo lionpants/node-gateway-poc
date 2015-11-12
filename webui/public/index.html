@@ -26,22 +26,36 @@
 <body ng-controller="IndexBodyCtrl">
     <h1>{{messageHeader}}</h1>
 
-    <input type="text" placeholder="Name" ng-model="newProduct.name" />
-    <input type="text" placeholder="Category" ng-model="newProduct.category" />
-    <input type="text" placeholder="Price" ng-model="newProduct.price" />
+    <div ng-if="!isLoggedIn">
+        <input type="text" placeholder="Username" ng-model="loginFields.username" />
+        <input type="password" placeholder="Password" ng-model="loginFields.password" />
 
-    <input type="button" ng-click="addProduct()" value="Add Product" />
-    <input type="button" ng-click="loadProducts()" value="Refresh Products" />
+        <input type="button" ng-click="login()" value="Login" />
+        <input type="button" ng-click="register()" value="Register" />
+        <p style="color:green">{{goodResponse}}</p>
+        <p style="color:red">{{badResponse}}</p>
+        <p>Login first!</p>
+    </div>
 
-    <p ng-show="products.length <= 0">No products found. :(</p>
-    <div ng-show="products.length > 0">
-        <table>
-            <tr ng-repeat="product in products">
-                <td>{{product.name}}</td>
-                <td>{{product.category}}</td>
-                <td>{{product.price}}</td>
-            </tr>
-        </table>
+    <div ng-if="isLoggedIn">
+        <input type="text" placeholder="Name" ng-model="newProduct.name" />
+        <input type="text" placeholder="Category" ng-model="newProduct.category" />
+        <input type="text" placeholder="Price" ng-model="newProduct.price" />
+
+        <input type="button" ng-click="addProduct()" value="Add Product" />
+        <input type="button" ng-click="loadProducts()" value="Refresh Products" />
+        <input type="button" ng-click="logout()" value="Logout" />
+
+        <p ng-show="products.length <= 0">No products found. :(</p>
+        <div ng-show="products.length > 0">
+            <table>
+                <tr ng-repeat="product in products">
+                    <td>{{product.name}}</td>
+                    <td>{{product.category}}</td>
+                    <td>{{product.price}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <script src="vendor/angular.js"></script>
@@ -51,6 +65,7 @@
     <script src="vendor/angular-cookies.js"></script>
 
     <script src="app.js"></script>
+    <script src="services/auth.js"></script>
     <script src="services/product.js"></script>
     <script src="controllers/index.js"></script>
 </body>

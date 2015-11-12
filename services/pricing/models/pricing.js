@@ -5,4 +5,4 @@ var pricingSchema = new mongoose.Schema({
     price: String
 });
 
-mongoose.model('Pricing', pricingSchema);
+module.exports = mongoose.model('Pricing', pricingSchema);

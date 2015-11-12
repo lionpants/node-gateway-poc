@@ -2,8 +2,6 @@
 
 var mongoose = require('mongoose');
 
-require('./models/product');
-
 mongoose.connect('mongodb://localhost/gateway-products');
 
 // Init App/Plugins
@@ -23,9 +21,7 @@ app.use(logger('dev'));
 
 // Init API
 
-var products = require('./api/product-details');
-
-app.use('/product-details', products);
+require('./api/product-details')(app);
 
 // Start app
 

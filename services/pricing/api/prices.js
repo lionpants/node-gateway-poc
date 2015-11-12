@@ -1,21 +1,18 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Pricing = mongoose.model('Pricing');
+var Pricing = require('../models/pricing');
 
-module.exports = router;
-
-router.route('/')
-    .get(function(req, res, next) {
-        Pricing.find().exec(function(err, prices) {
-            if (err) return next(err);
-            res.send(prices);
+module.exports = function(app) {
+    app.route('/prices')
+        .get(function(req, res, next) {
+            Pricing.find().exec(function(err, prices) {
+                if (err) return next(err);
+                res.send(prices);
+            });
+        })
+        .post(function(req, res, next) {
+            var pricing = new Pricing(req.body);
+            pricing.save(function(err, pricing) {
+                if (err) return next(err);
+                res.json(pricing);
+            });
         });
-    })
-    .post(function(req, res, next) {
-        var pricing = new Pricing(req.body);
-        pricing.save(function(err, pricing) {
-            if (err) return next(err);
-            res.json(pricing);
-        });
-    });
+};
