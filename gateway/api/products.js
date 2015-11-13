@@ -1,7 +1,8 @@
 var __ = require('lodash');
 var Promise = require('bluebird');
+var needle = require('needle');
 
-module.exports = function(app, needle) {
+module.exports = function(app) {
     var productURI = 'localhost:2222/product-details';
     var pricingURI = 'localhost:3333/prices';
 

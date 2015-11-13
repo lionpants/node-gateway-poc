@@ -26,12 +26,12 @@ Promise.promisifyAll(needle);
 
 // Init API
 
-require('./api/auth')(app, needle);
+require('./api/auth')(app);
 
 // Check auth before any end points below
-app.use(require('./util/checkAuth')(needle));
+app.use(require('./util/checkAuth'));
 
-require('./api/products')(app, needle);
+require('./api/products')(app);
 
 // Start app
 

@@ -1,9 +1,10 @@
+var needle = require('needle');
 var newerror = require('newerror');
 
 var DuplicateUserError = newerror('DuplicateUserError');
 var MisingRegistrationFieldsError = newerror('MisingRegistrationFieldsError');
 
-module.exports = function(app, needle) {
+module.exports = function(app) {
     app.post('/login', function(req, res, next) {
         var loginUser = needle.postAsync('http://localhost:4844/login', {
             username: req.body.username,
